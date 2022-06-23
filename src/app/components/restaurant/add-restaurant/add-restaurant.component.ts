@@ -25,17 +25,12 @@ export class AddRestaurantComponent implements OnInit {
   ngOnInit(): void {}
 
   submitForm(){
-    console.log("fjb");
-    
+    console.log("submit");
   }
 
   onAddItem(){
     this.restaurants.push(this.AddRestaurantFormGroup.value);
-    console.log(this.restaurants)
-    this.restaurants = [this.restaurants, this.AddRestaurantFormGroup.value];
-    this.dialogRef.close();
-
-    
+    this.dialogRef.close();  
   }
 
   onCancel(){
