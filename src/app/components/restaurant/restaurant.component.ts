@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddRestaurantComponent } from './add-restaurant/add-restaurant.component';
 import { MatTableDataSource } from '@angular/material/table';
 import * as restdata from 'src/assets/restaurants.json';
+import { RestaurantsService } from '../../services/restaurants.service';
+import { RestaurantModel } from '../../models/restaurants';
 
 @Component({
   selector: 'app-restaurant',
@@ -11,10 +13,10 @@ import * as restdata from 'src/assets/restaurants.json';
 })
 export class RestaurantComponent implements OnInit {
   restaurants: any = (restdata as any).default;
+  restaurantsData: RestaurantModel[] = [];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private restaurantsService: RestaurantsService) { }
 
-  ngOnInit(): void { }
   displayedColumns: string[] = ['id', 'name', 'cuisine_type', 'btn'];
   dataSource = new MatTableDataSource(this.restaurants);
 
@@ -23,15 +25,25 @@ export class RestaurantComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  getRestaurants(): void {
+    this.restaurantsService.getRestaurants()
+      .subscribe(restau => this.restaurantsData = restau)
+  }
+
+  ngOnInit() {
+    this.getRestaurants();
+    console.log("this.restaurantsData", this.restaurantsData);
+  }
+
   add_restaurant(): void {
     const dialogRef = this.dialog.open(AddRestaurantComponent, {
       width: '400px',
-      data: "Hello"
+      data: this.dataSource
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      return null;
-    });
+    dialogRef.afterClosed().subscribe(result => 
+     console.log("close")
+    );
   }
 
   removeSelectedRows(e: number) {

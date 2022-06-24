@@ -2,11 +2,11 @@
             <mat-toolbar>
                 <span style="text-align: center; width: 100%;">Add Restaurant</span>
             </mat-toolbar>
-      <form [formGroup] = "AddRestaurantFormGroup">
-          <div style="height:15em; margin-left: 1em;">
+      <form [formGroup] = "AddRestaurantFormGroup" (ngSubmit)="onAddRestaurant()">
+          <div style="height:10em; margin-left: 1em;">
             <div class="container-fluid" style="margin-top: 2em;">
               <mat-form-field style="margin-left: 0.5em; width:18em;">       
-                <input matInput placeholder="Enter Item Name"
+                <input matInput placeholder="Enter Restaurant Name"
                 formControlName="name"
                 required>
                 <mat-error>Name is required</mat-error>
@@ -20,13 +20,10 @@
                   <mat-option [value]="category" *ngFor="let category of CategoryArray">{{category}}</mat-option>
                 </mat-select>
               </mat-form-field>
-            
            </div>
-           
-            
           </div>
-          <div>
-            <button mat-raised-button style="margin-left: 6em;" [disabled]="!AddRestaurantFormGroup.valid" type="button" (click)="onAddItem()" color="primary">Save</button>
+          <div style="display: flex">
+            <button mat-raised-button style="margin-left: 6em;" [disabled]="!AddRestaurantFormGroup.valid" type="submit" color="primary">Save</button>
             <button mat-raised-button type="button" (click)="onCancel()" color="primary" style="margin-left: 3em;">Cancel</button>
           </div>
       </form>
